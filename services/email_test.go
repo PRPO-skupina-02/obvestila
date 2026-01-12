@@ -32,7 +32,8 @@ func TestLoadTemplates(t *testing.T) {
 }
 
 func TestNewEmailService_MissingAPIKey(t *testing.T) {
-	// Don't set RESEND_API_KEY
+	// Explicitly unset RESEND_API_KEY by setting it to empty string
+	t.Setenv("RESEND_API_KEY", "")
 	t.Setenv("RESEND_FROM_EMAIL", "test@example.com")
 
 	service, err := NewEmailService()
@@ -43,7 +44,8 @@ func TestNewEmailService_MissingAPIKey(t *testing.T) {
 
 func TestNewEmailService_DefaultFromEmail(t *testing.T) {
 	t.Setenv("RESEND_API_KEY", "test-key")
-	// Don't set RESEND_FROM_EMAIL to test default
+	// Explicitly unset RESEND_FROM_EMAIL to test default
+	t.Setenv("RESEND_FROM_EMAIL", "")
 
 	service, err := NewEmailService()
 	require.NoError(t, err)
