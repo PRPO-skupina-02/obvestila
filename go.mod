@@ -3,7 +3,7 @@ module github.com/PRPO-skupina-02/obvestila
 go 1.25.1
 
 require (
-	github.com/PRPO-skupina-02/common v0.5.0
+	github.com/PRPO-skupina-02/common v0.7.0
 	github.com/gin-gonic/gin v1.11.0
 	github.com/resend/resend-go/v2 v2.13.0
 	github.com/stretchr/testify v1.11.1
@@ -61,5 +61,3 @@ require (
 	google.golang.org/protobuf v1.36.9 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/PRPO-skupina-02/common => ../common

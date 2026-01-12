@@ -44,7 +44,7 @@ func TestGetInfo(t *testing.T) {
 	assert.Contains(t, info.Description, "RabbitMQ")
 	assert.Contains(t, info.Description, "Resend")
 	assert.Contains(t, info.Description, "CineCore")
-	
+
 	// Check available templates
 	assert.Contains(t, info.AvailableTemplates, "password_reset")
 	assert.Contains(t, info.AvailableTemplates, "movie_suggestion")
