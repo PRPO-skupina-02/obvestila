@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Movie Suggestion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            padding: 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+        }
+        .movie-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .movie-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        .movie-info {
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 New Movie Just Added!</h1>
+        </div>
+        <div class="content">
+            <p>Hello {{.UserName}},</p>
+            <p>We think you'll love this new movie that's now showing:</p>
+
+            <div class="movie-card">
+                <div class="movie-title">{{.MovieTitle}}</div>
+                <div class="movie-info">
+                    <strong>Genre:</strong> {{.MovieGenre}}<br>
+                    {{if .MovieDuration}}<strong>Duration:</strong> {{.MovieDuration}} minutes<br>{{end}}
+                    {{if .MovieRating}}<strong>Rating:</strong> {{.MovieRating}}<br>{{end}}
+                </div>
+                <p>{{.MovieDescription}}</p>
+                {{if .ShowingDate}}
+                <p><strong>Showing Date:</strong> {{.ShowingDate}}</p>
+                {{end}}
+                {{if .TheaterName}}
+                <p><strong>Theater:</strong> {{.TheaterName}}</p>
+                {{end}}
+            </div>
+
+            <div style="text-align: center;">
+                <a href="{{.BookingLink}}" class="button">Book Tickets Now</a>
+            </div>
+
+            <p>Don't miss out on this exciting film!</p>
+            <p>Best regards,<br>The CineCore Team</p>
+        </div>
+        <div class="footer">
+            <p>You're receiving this because you subscribed to movie suggestions.</p>
+            <p>This is an automated email, please do not reply.</p>
+        </div>
+    </div>
+</body>
+</html>

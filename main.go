@@ -4,12 +4,13 @@ import (
 	"log"
 	"log/slog"
 	"os"
+	"os/signal"
+	"syscall"
 
-	"github.com/PRPO-skupina-02/common/database"
 	"github.com/PRPO-skupina-02/common/logging"
-	"github.com/PRPO-skupina-02/common/validation"
 	"github.com/PRPO-skupina-02/obvestila/api"
-	"github.com/PRPO-skupina-02/obvestila/db"
+	"github.com/PRPO-skupina-02/obvestila/queue"
+	"github.com/PRPO-skupina-02/obvestila/services"
 	"github.com/gin-gonic/gin"
 )
 
@@ -23,29 +24,55 @@ func main() {
 }
 
 func run() error {
-	slog.Info("Starting server")
+	slog.Info("Starting obvestila service")
 
 	logger := logging.GetDefaultLogger()
 	slog.SetDefault(logger)
 
-	db, err := database.OpenAndMigrateProd(db.MigrationsFS)
+	// Initialize email service
+	emailService, err := services.NewEmailService()
 	if err != nil {
 		return err
 	}
+	slog.Info("Email service initialized")
 
-	trans, err := validation.RegisterValidation()
+	// Get RabbitMQ URL from environment
+	rabbitmqURL := os.Getenv("RABBITMQ_URL")
+	if rabbitmqURL == "" {
+		rabbitmqURL = "amqp://guest:guest@localhost:5672/"
+	}
+
+	// Initialize RabbitMQ consumer
+	consumer, err := queue.NewEmailConsumer(rabbitmqURL, emailService)
 	if err != nil {
 		return err
 	}
+	defer consumer.Close()
 
+	// Start consuming messages
+	err = consumer.Start()
+	if err != nil {
+		return err
+	}
+	slog.Info("RabbitMQ consumer started")
+
+	// Setup HTTP server
 	router := gin.Default()
-	api.Register(router, db, trans)
+	api.Register(router)
 
-	slog.Info("Server startup complete")
-	err = router.Run(":8080")
-	if err != nil {
-		return err
-	}
+	// Start HTTP server in a goroutine
+	go func() {
+		slog.Info("Starting HTTP server on :8080")
+		if err := router.Run(":8080"); err != nil {
+			slog.Error("HTTP server error", "error", err)
+		}
+	}()
 
+	// Wait for interrupt signal
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+	<-sigChan
+
+	slog.Info("Shutting down gracefully...")
 	return nil
 }

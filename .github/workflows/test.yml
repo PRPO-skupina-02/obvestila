@@ -22,7 +22,7 @@ jobs:
         run: make install-cli-tools
       - name: Prepare env
         run: cp .env.example .env
-      - name: Start database
-        run: docker compose up -d --wait auth-db
+      - name: Start RabbitMQ
+        run: docker compose up -d --wait rabbitmq
       - name: Test
         run: make test

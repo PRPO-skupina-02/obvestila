@@ -1,0 +1,82 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Email notification service for the PRPO project. Messages are consumed from RabbitMQ queue.",
+        "title": "Obvestila API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/api/v1/obvestila",
+    "paths": {
+        "/api/v1/obvestila/info": {
+            "get": {
+                "description": "Returns information about the email service, available templates, and usage instructions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "info"
+                ],
+                "summary": "Get service information",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/ServiceInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/healthcheck": {
+            "get": {
+                "description": "Returns OK if the service is healthy",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "system"
+                ],
+                "summary": "Health check",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ServiceInfo": {
+            "type": "object",
+            "properties": {
+                "available_templates": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string",
+                    "example": "Email notification service using RabbitMQ and Resend"
+                },
+                "queue_name": {
+                    "type": "string",
+                    "example": "emails"
+                },
+                "service_name": {
+                    "type": "string",
+                    "example": "obvestila"
+                },
+                "usage": {
+                    "type": "string",
+                    "example": "Publish JSON messages to the 'emails' queue"
+                }
+            }
+        }
+    }
+}
