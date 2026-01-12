@@ -48,16 +48,16 @@ type EmailMessageSchema struct {
 	To           string                 `json:"to" binding:"required,email" example:"user@example.com"`
 	Template     string                 `json:"template" binding:"required" example:"password_reset"`
 	TemplateData map[string]interface{} `json:"template_data,omitempty"`
-} // @name EmailMessage
+} //	@name	EmailMessage
 
 // ServiceInfo represents information about the email service
 type ServiceInfo struct {
-	ServiceName      string   `json:"service_name" example:"obvestila"`
-	Description      string   `json:"description" example:"Email notification service using RabbitMQ and Resend"`
-	QueueName        string   `json:"queue_name" example:"emails"`
+	ServiceName        string   `json:"service_name" example:"obvestila"`
+	Description        string   `json:"description" example:"Email notification service using RabbitMQ and Resend"`
+	QueueName          string   `json:"queue_name" example:"emails"`
 	AvailableTemplates []string `json:"available_templates"`
-	Usage            string   `json:"usage" example:"Publish JSON messages to the 'emails' queue"`
-} // @name ServiceInfo
+	Usage              string   `json:"usage" example:"Publish JSON messages to the 'emails' queue"`
+} //	@name	ServiceInfo
 
 // getInfo godoc
 //
@@ -69,9 +69,9 @@ type ServiceInfo struct {
 //	@Router			/api/v1/obvestila/info [get]
 func getInfo(c *gin.Context) {
 	info := ServiceInfo{
-		ServiceName:      "obvestila",
-		Description:      "Email notification service using RabbitMQ and Resend. All emails are sent from CineCore with template-based content.",
-		QueueName:        "emails",
+		ServiceName: "obvestila",
+		Description: "Email notification service using RabbitMQ and Resend. All emails are sent from CineCore with template-based content.",
+		QueueName:   "emails",
 		AvailableTemplates: []string{
 			"password_reset",
 			"movie_suggestion",
