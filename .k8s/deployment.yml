@@ -30,11 +30,22 @@ spec:
               key: LOG_LEVEL
         - name: TZ
           value: "Europe/Ljubljana"
-        - name: RABBITMQ_URL
+        - name: RABBITMQ_USERNAME
           valueFrom:
-            configMapKeyRef:
-              name: obvestila-config
-              key: RABBITMQ_URL
+            secretKeyRef:
+              name: rabbitmq-credentials
+              key: username
+        - name: RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq-credentials
+              key: password
+        - name: RABBITMQ_HOST
+          value: "rabbitmq"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: RABBITMQ_URL
+          value: "amqp://$(RABBITMQ_USERNAME):$(RABBITMQ_PASSWORD)@$(RABBITMQ_HOST):$(RABBITMQ_PORT)/"
         - name: RESEND_API_KEY
           valueFrom:
             secretKeyRef:

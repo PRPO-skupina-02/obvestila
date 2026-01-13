@@ -5,5 +5,4 @@ metadata:
   namespace: production
 data:
   LOG_LEVEL: "INFO"
-  RABBITMQ_URL: "amqp://rabbitmq:5672"
-  RESEND_FROM_EMAIL: "noreply@prpo.timhrovat.com"
+  RESEND_FROM_EMAIL: "noreply@cinecore.timhrovat.com"
