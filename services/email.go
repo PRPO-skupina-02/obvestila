@@ -29,7 +29,7 @@ func NewEmailService() (*EmailService, error) {
 
 	fromEmail := os.Getenv("RESEND_FROM_EMAIL")
 	if fromEmail == "" {
-		fromEmail = "noreply@yourdomain.com"
+		fromEmail = "onboarding@resend.dev"
 	}
 
 	client := resend.NewClient(apiKey)
