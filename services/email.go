@@ -58,6 +58,7 @@ func (s *EmailService) loadTemplates() error {
 		"password_reset",
 		"movie_suggestion",
 		"welcome",
+		"recommendation",
 	}
 
 	for _, name := range templates {
