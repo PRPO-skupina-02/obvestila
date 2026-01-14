@@ -4,15 +4,14 @@ metadata:
   name: obvestila
   namespace: production
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     kubernetes.io/ingress.class: "gce"
 spec:
   tls:
   - hosts:
-    - obvestila.prpo.timhrovat.com
+    - obvestila.cinecore.timhrovat.com
     secretName: obvestila-tls
   rules:
-  - host: obvestila.prpo.timhrovat.com
+  - host: obvestila.cinecore.timhrovat.com
     http:
       paths:
       - path: /
